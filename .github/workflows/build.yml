@@ -10,6 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Login to Google Cloud
+        uses: google-github-actions/auth@v0
+        with:
+          credentials_json: ${{ secrets.GCLOUD_CREDENTIALS }}
+
       - name: Login to GAR
         uses: docker/login-action@v2.1.0
         with:
@@ -27,3 +32,10 @@ jobs:
           push: true
           tags: europe-west2-docker.pkg.dev/comp3000-air-quality/comp3000-docker/defra-shim:latest
           provenance: false
+
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v0
+        with:
+          service: defra-shim
+          image: europe-west2-docker.pkg.dev/comp3000-air-quality/comp3000-docker/defra-shim:latest
+          region: europe-west1
