@@ -14,4 +14,4 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 COPY main.py .
 
-ENTRYPOINT [ "python", "-m", "uvicorn", "main:app" ]
+ENTRYPOINT [ "python", "-m", "uvicorn", "main:app", "--port", "$PORT" ]
