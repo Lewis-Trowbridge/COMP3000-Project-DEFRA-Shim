@@ -6,7 +6,7 @@ app = FastAPI()
 
 
 @app.get("/data")
-async def test2(site: str, date: datetime.datetime):
+async def get_data(site: str, date: datetime.datetime):
     data = importAURN(site, [date.year])
     if not data.empty and date in data.index:
         return Response(content=data.loc[date].to_json(orient="index", date_format="iso"),

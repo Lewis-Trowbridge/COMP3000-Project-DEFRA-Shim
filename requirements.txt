@@ -1,0 +1,2 @@
+fastapi~=0.92.0
+pyaurn~=0.1.1
