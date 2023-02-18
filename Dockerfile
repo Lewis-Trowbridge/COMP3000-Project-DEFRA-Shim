@@ -14,4 +14,4 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 COPY main.py .
 
-ENTRYPOINT python -m uvicorn main:app --host 0.0.0.0 --port ${PORT}
+ENTRYPOINT python -m gunicorn --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:${PORT}
