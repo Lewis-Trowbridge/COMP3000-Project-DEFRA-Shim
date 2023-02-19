@@ -8,7 +8,10 @@ app = FastAPI()
 
 
 @app.get("/data")
-async def get_data(site: str, date: datetime.datetime = datetime.datetime.now(), metric: str | None = None):
+async def get_data(site: str, date: datetime.datetime | None = None, metric: str | None = None):
+    # Avoid using default parameters: https://docs.python-guide.org/writing/gotchas/#mutable-default-arguments
+    if date is None:
+        date = datetime.datetime.now()
     data = importAURN(site, [date.year])
     if not data.empty:
         data = get_given_or_latest(data, date)
