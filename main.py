@@ -12,6 +12,8 @@ async def get_data(site: str, date: datetime.datetime | None = None, metric: str
     # Avoid using default parameters: https://docs.python-guide.org/writing/gotchas/#mutable-default-arguments
     if date is None:
         date = datetime.datetime.now()
+    # Force timezone to be timezone naive to match index
+    date = date.replace(tzinfo=None)
     data = importAURN(site, [date.year])
     if not data.empty:
         data = get_given_or_latest(data, date)
